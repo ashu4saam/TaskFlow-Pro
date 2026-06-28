@@ -4,6 +4,7 @@ import {
   BarChart3,
   CalendarDays,
   Settings,
+  Sparkles,
 } from "lucide-react";
 
 import { NavLink } from "react-router-dom";
@@ -12,33 +13,73 @@ function Sidebar() {
   return (
     <aside
       className="
-      w-72
-      min-h-screen
-      p-8
-      bg-slate-900
-      dark:bg-slate-950
-      border-r
-      border-slate-800
-      transition-colors duration-300
-    "
+        w-72
+        min-h-screen
+
+        flex
+        flex-col
+
+        bg-white
+        dark:bg-slate-950
+
+        border-r
+        border-slate-200
+        dark:border-slate-800
+
+        transition-colors
+        duration-300
+      "
     >
       {/* Logo */}
 
-      <div className="mb-10">
+      <div className="px-8 pt-8 pb-6">
 
-        <h2 className="text-3xl font-bold text-blue-400">
-          TaskFlow
-        </h2>
+        <div className="flex items-center gap-4">
 
-        <p className="text-slate-400 mt-2 text-sm">
-          Productivity Workspace
-        </p>
+          <div
+            className="
+              w-14
+              h-14
+
+              rounded-2xl
+
+              bg-gradient-to-r
+              from-blue-600
+              to-violet-600
+
+              flex
+              items-center
+              justify-center
+
+              text-white
+            "
+          >
+            <Sparkles size={24} />
+          </div>
+
+          <div>
+
+            <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white">
+              TaskFlow
+            </h2>
+
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              Productivity Workspace
+            </p>
+
+          </div>
+
+        </div>
 
       </div>
 
+      {/* Divider */}
+
+      <div className="mx-8 border-b border-slate-200 dark:border-slate-800" />
+
       {/* Navigation */}
 
-      <nav className="space-y-3">
+      <nav className="flex-1 px-5 py-6 space-y-2">
 
         <SidebarItem
           to="/"
@@ -73,6 +114,43 @@ function Sidebar() {
 
       </nav>
 
+      {/* Footer */}
+
+      <div
+        className="
+          p-6
+          border-t
+          border-slate-200
+          dark:border-slate-800
+        "
+      >
+        <div
+          className="
+            rounded-2xl
+
+            bg-gradient-to-r
+            from-blue-600
+            to-violet-600
+
+            p-4
+
+            text-white
+          "
+        >
+          <p className="text-xs uppercase tracking-wider opacity-80">
+            Version
+          </p>
+
+          <h3 className="mt-1 font-bold text-lg">
+            TaskFlow Pro
+          </h3>
+
+          <p className="text-sm opacity-90 mt-1">
+            v1.0.0
+          </p>
+        </div>
+      </div>
+
     </aside>
   );
 }
@@ -84,25 +162,53 @@ function SidebarItem({ icon, title, to, end }) {
       end={end}
       className={({ isActive }) =>
         `
+        group
+
+        relative
+
         flex
         items-center
+
         gap-4
-        p-4
-        rounded-xl
-        font-medium
+
+        px-5
+        py-4
+
+        rounded-2xl
+
+        font-semibold
+
         transition-all
         duration-300
 
         ${
           isActive
-            ? "bg-blue-600 text-white shadow-lg"
-            : "text-slate-300 hover:bg-slate-800"
+            ? `
+              bg-gradient-to-r
+              from-blue-600
+              to-violet-600
+
+              text-white
+
+              shadow-lg
+            `
+            : `
+              text-slate-700
+              dark:text-slate-300
+
+              hover:bg-slate-100
+              dark:hover:bg-slate-800
+
+              hover:translate-x-1
+            `
         }
-        `
+      `
       }
     >
       {icon}
+
       <span>{title}</span>
+
     </NavLink>
   );
 }

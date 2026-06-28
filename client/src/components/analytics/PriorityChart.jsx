@@ -10,6 +10,8 @@ import {
 } from "recharts";
 
 import { motion } from "framer-motion";
+import { Flag } from "lucide-react";
+
 import { useTasks } from "../../context/TaskContext";
 
 function PriorityChart() {
@@ -35,85 +37,83 @@ function PriorityChart() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 25 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
+      whileHover={{ y: -5 }}
       className="
         rounded-3xl
         border
-        border-slate-200
-        dark:border-slate-700
-
-        bg-white
-        dark:bg-slate-900
-
-        p-6
-
+        border-slate-700
+        bg-slate-900
+        p-8
         shadow-lg
       "
     >
-      <div className="mb-6">
+      {/* Header */}
 
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
-          Priority Distribution
-        </h2>
+      <div className="flex items-center justify-between">
 
-        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          Breakdown of tasks by priority level
-        </p>
+        <div>
+
+          <h2 className="text-2xl font-bold text-white">
+            Priority Distribution
+          </h2>
+
+          <p className="mt-2 text-slate-400">
+            Overview of task priorities
+          </p>
+
+        </div>
+
+        <Flag
+          size={32}
+          className="text-blue-400"
+        />
 
       </div>
 
-      <div className="h-80">
+      {/* Chart */}
+
+      <div className="mt-8 h-80">
 
         <ResponsiveContainer width="100%" height="100%">
 
-          <BarChart
-            data={data}
-            margin={{
-              top: 10,
-              right: 10,
-              left: 0,
-              bottom: 0,
-            }}
-          >
+          <BarChart data={data}>
+
             <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="#cbd5e1"
+              stroke="#334155"
+              strokeDasharray="4 4"
             />
 
             <XAxis
               dataKey="priority"
-              tick={{
-                fill: "#64748b",
-                fontSize: 13,
-              }}
+              stroke="#94a3b8"
+              tickLine={false}
+              axisLine={false}
             />
 
             <YAxis
+              stroke="#94a3b8"
               allowDecimals={false}
-              tick={{
-                fill: "#64748b",
-                fontSize: 13,
-              }}
+              tickLine={false}
+              axisLine={false}
             />
 
             <Tooltip
+              cursor={{ fill: "rgba(59,130,246,.08)" }}
               contentStyle={{
-                borderRadius: "12px",
-                border: "none",
-                backgroundColor: "#1e293b",
+                background: "#0f172a",
+                border: "1px solid #334155",
+                borderRadius: "14px",
                 color: "#fff",
               }}
             />
 
             <Bar
               dataKey="tasks"
-              radius={[10, 10, 0, 0]}
+              radius={[12, 12, 0, 0]}
             >
-              {data.map((entry) => (
+              {data.map((entry, index) => (
                 <Cell
-                  key={entry.priority}
+                  key={index}
                   fill={entry.color}
                 />
               ))}
@@ -125,28 +125,40 @@ function PriorityChart() {
 
       </div>
 
-      <div className="mt-6 flex justify-center gap-6 flex-wrap">
+      {/* Footer */}
 
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-full bg-red-500" />
-          <span className="text-sm text-slate-600 dark:text-slate-300">
-            High
-          </span>
-        </div>
+      <div className="mt-8 grid grid-cols-3 gap-4">
 
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-full bg-yellow-500" />
-          <span className="text-sm text-slate-600 dark:text-slate-300">
-            Medium
-          </span>
-        </div>
+        {data.map((item) => (
 
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded-full bg-green-500" />
-          <span className="text-sm text-slate-600 dark:text-slate-300">
-            Low
-          </span>
-        </div>
+          <div
+            key={item.priority}
+            className="
+              rounded-2xl
+              bg-slate-800
+              p-4
+              text-center
+            "
+          >
+
+            <div
+              className="mx-auto mb-2 h-3 w-3 rounded-full"
+              style={{
+                background: item.color,
+              }}
+            />
+
+            <h3 className="text-2xl font-bold text-white">
+              {item.tasks}
+            </h3>
+
+            <p className="text-sm text-slate-400">
+              {item.priority}
+            </p>
+
+          </div>
+
+        ))}
 
       </div>
 

@@ -8,19 +8,65 @@ body,
   width: 100%;
   min-height: 100%;
   margin: 0;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family:
+    Inter,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+
   background: #f8fafc;
   color: #0f172a;
+
   transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+    background-color .35s ease,
+    color .35s ease;
 }
 
-/* Dark theme */
+/* Scrollbar */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e2e8f0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+/* Dark Theme */
+
 .dark body {
-  background: #0f172a;
+  background: #020617;
   color: #f8fafc;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+button,
+input,
+select,
+textarea {
+  transition: all .25s ease;
 }

@@ -26,35 +26,41 @@ function StatsGrid() {
   ).length;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mt-8">
-      <StatCard
-        title="Total Tasks"
-        value={totalTasks}
-        icon={<ClipboardList />}
-        color="bg-blue-600"
-      />
+    <section className="mt-10">
 
-      <StatCard
-        title="Completed"
-        value={completed}
-        icon={<CheckCircle />}
-        color="bg-green-500"
-      />
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-7">
 
-      <StatCard
-        title="Pending"
-        value={pending}
-        icon={<Clock3 />}
-        color="bg-yellow-500"
-      />
+        <StatCard
+          title="Total Tasks"
+          value={totalTasks}
+          icon={<ClipboardList size={28} />}
+          color="bg-gradient-to-r from-blue-500 to-blue-700"
+        />
 
-      <StatCard
-        title="High Priority"
-        value={highPriority}
-        icon={<AlertTriangle />}
-        color="bg-red-500"
-      />
-    </div>
+        <StatCard
+          title="Completed"
+          value={completed}
+          icon={<CheckCircle size={28} />}
+          color="bg-gradient-to-r from-green-500 to-green-700"
+        />
+
+        <StatCard
+          title="Pending"
+          value={pending}
+          icon={<Clock3 size={28} />}
+          color="bg-gradient-to-r from-yellow-500 to-orange-500"
+        />
+
+        <StatCard
+          title="High Priority"
+          value={highPriority}
+          icon={<AlertTriangle size={28} />}
+          color="bg-gradient-to-r from-red-500 to-red-700"
+        />
+
+      </div>
+
+    </section>
   );
 }
 

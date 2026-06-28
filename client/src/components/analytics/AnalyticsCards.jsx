@@ -1,4 +1,11 @@
-import { CheckCircle2, Clock3, Flag, ListTodo } from "lucide-react";
+import {
+  CheckCircle2,
+  Clock3,
+  Flag,
+  ListTodo,
+  TrendingUp,
+} from "lucide-react";
+
 import { motion } from "framer-motion";
 import { useTasks } from "../../context/TaskContext";
 
@@ -15,34 +22,39 @@ function AnalyticsCards() {
     (task) => task.status === "Pending"
   ).length;
 
-  const highPriority = tasks.filter(
+  const high = tasks.filter(
     (task) => task.priority === "High"
   ).length;
+
+  const productivity =
+    total === 0
+      ? 0
+      : Math.round((completed / total) * 100);
 
   const cards = [
     {
       title: "Total Tasks",
       value: total,
-      icon: <ListTodo size={28} />,
-      bg: "bg-blue-600",
+      icon: <ListTodo size={26} />,
+      color: "from-blue-500 to-blue-700",
     },
     {
       title: "Completed",
       value: completed,
-      icon: <CheckCircle2 size={28} />,
-      bg: "bg-green-500",
+      icon: <CheckCircle2 size={26} />,
+      color: "from-green-500 to-green-700",
     },
     {
       title: "Pending",
       value: pending,
-      icon: <Clock3 size={28} />,
-      bg: "bg-yellow-500",
+      icon: <Clock3 size={26} />,
+      color: "from-orange-500 to-yellow-500",
     },
     {
       title: "High Priority",
-      value: highPriority,
-      icon: <Flag size={28} />,
-      bg: "bg-red-500",
+      value: high,
+      icon: <Flag size={26} />,
+      color: "from-red-500 to-red-700",
     },
   ];
 
@@ -53,61 +65,158 @@ function AnalyticsCards() {
 
         <motion.div
           key={card.title}
-          initial={{ opacity: 0, y: 25 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{
+            opacity: 0,
+            y: 20,
+          }}
+          animate={{
+            opacity: 1,
+            y: 0,
+          }}
           transition={{
-            duration: 0.35,
             delay: index * 0.1,
           }}
           whileHover={{
-            y: -8,
-            scale: 1.02,
+            y: -6,
           }}
           className="
-            rounded-3xl
-            border
-            border-slate-200
-            dark:border-slate-700
+            group
 
-            bg-white
-            dark:bg-slate-900
+            rounded-3xl
+
+            border
+            border-slate-700
+
+            bg-slate-900
 
             p-6
 
             shadow-lg
-            hover:shadow-2xl
 
-            transition-all
-            duration-300
+            transition
           "
         >
-          <div
-            className={`
-              h-16
-              w-16
-              rounded-2xl
-              ${card.bg}
-              flex
-              items-center
-              justify-center
-              text-white
-              shadow-lg
-            `}
-          >
-            {card.icon}
+
+          <div className="flex justify-between">
+
+            <div>
+
+              <p className="text-slate-400 text-sm">
+                {card.title}
+              </p>
+
+              <h2 className="mt-3 text-5xl font-black text-white">
+                {card.value}
+              </h2>
+
+            </div>
+
+            <div
+              className={`
+                flex
+                h-16
+                w-16
+                items-center
+                justify-center
+                rounded-2xl
+
+                bg-gradient-to-br
+
+                ${card.color}
+
+                text-white
+              `}
+            >
+              {card.icon}
+            </div>
+
           </div>
 
-          <h3 className="mt-6 text-sm font-medium text-slate-500 dark:text-slate-400">
-            {card.title}
-          </h3>
+          <div className="mt-6 flex items-center gap-2">
 
-          <p className="mt-2 text-4xl font-extrabold text-slate-900 dark:text-white">
-            {card.value}
-          </p>
+            <TrendingUp
+              size={18}
+              className="text-green-400"
+            />
+
+            <span className="text-sm text-green-400">
+              Live Statistics
+            </span>
+
+          </div>
 
         </motion.div>
 
       ))}
+
+      {/* Productivity */}
+
+      <motion.div
+        whileHover={{
+          y: -6,
+        }}
+        className="
+          md:col-span-2
+          xl:col-span-4
+
+          rounded-3xl
+
+          border
+          border-slate-700
+
+          bg-slate-900
+
+          p-8
+        "
+      >
+
+        <div className="flex justify-between items-center">
+
+          <div>
+
+            <h2 className="text-2xl font-bold text-white">
+              Productivity Score
+            </h2>
+
+            <p className="mt-2 text-slate-400">
+              Completion rate based on your current tasks.
+            </p>
+
+          </div>
+
+          <div className="text-5xl font-black text-blue-500">
+            {productivity}%
+          </div>
+
+        </div>
+
+        <div className="mt-6 h-4 rounded-full bg-slate-800 overflow-hidden">
+
+          <motion.div
+            initial={{
+              width: 0,
+            }}
+            animate={{
+              width: `${productivity}%`,
+            }}
+            transition={{
+              duration: 1,
+            }}
+            className="
+              h-full
+
+              rounded-full
+
+              bg-gradient-to-r
+              from-blue-500
+              via-violet-500
+              to-purple-500
+            "
+          />
+
+        </div>
+
+      </motion.div>
 
     </div>
   );

@@ -18,19 +18,21 @@ function TaskList() {
   const { tasks, loading, removeTask } = useTasks();
 
   // Search & Filter
+
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All");
   const [priority, setPriority] = useState("All");
 
   // Modals
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const [selectedTask, setSelectedTask] = useState(null);
 
-  // ===========================
+  // ======================
   // Handlers
-  // ===========================
+  // ======================
 
   const handleAddTask = () => {
     setSelectedTask(null);
@@ -62,9 +64,9 @@ function TaskList() {
     }
   };
 
-  // ===========================
-  // Filters
-  // ===========================
+  // ======================
+  // Filtering
+  // ======================
 
   const filteredTasks = useMemo(() => {
     return tasks.filter((task) => {
@@ -86,23 +88,13 @@ function TaskList() {
     });
   }, [tasks, search, status, priority]);
 
-  // ===========================
-  // Skeleton Loading
-  // ===========================
+  // ======================
+  // Loading
+  // ======================
 
   if (loading) {
     return (
       <div className="mt-12">
-
-        <div className="mb-10">
-
-          <div className="h-5 w-40 rounded bg-slate-200 dark:bg-slate-700 animate-pulse" />
-
-          <div className="mt-4 h-10 w-72 rounded bg-slate-200 dark:bg-slate-700 animate-pulse" />
-
-          <div className="mt-4 h-5 w-96 rounded bg-slate-200 dark:bg-slate-700 animate-pulse" />
-
-        </div>
 
         <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-3">
 
@@ -119,126 +111,193 @@ function TaskList() {
   return (
     <>
       <motion.section
-        className="mt-12"
         initial={{ opacity: 0, y: 25 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.35 }}
+        className="mt-10"
       >
 
+        {/* =============================== */}
         {/* Header */}
+        {/* =============================== */}
 
-        <div className="flex flex-col lg:flex-row justify-between lg:items-center gap-8 mb-10">
+        <div className="mb-8">
 
-          <div>
+          <div className="inline-flex items-center gap-3 rounded-full border border-blue-500/20 bg-blue-500/10 px-5 py-2">
 
-            <span className="uppercase tracking-widest text-blue-600 text-sm font-semibold">
+            <span className="text-lg">📋</span>
+
+            <span className="uppercase tracking-[0.22em] text-sm font-semibold text-blue-400">
               Task Workspace
             </span>
 
-            <h2 className="mt-2 text-4xl font-bold text-slate-900 dark:text-white">
-              Today's Tasks
-            </h2>
+          </div>
 
-            <p className="mt-3 text-lg text-slate-600 dark:text-slate-300">
-              Organize, prioritize and manage all your daily work efficiently.
-            </p>
+          <div className="mt-6 flex flex-col xl:flex-row xl:items-end xl:justify-between gap-8">
 
-            <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
-              {filteredTasks.length} active task
-              {filteredTasks.length !== 1 && "s"}
-            </p>
+            <div>
+
+              <h1 className="text-5xl font-black text-white tracking-tight">
+                Today's Tasks
+              </h1>
+
+              <p className="mt-3 max-w-2xl text-lg leading-8 text-slate-400">
+                Organize deadlines, prioritize work and stay productive with one
+                smart workspace.
+              </p>
+
+              {/* Stats */}
+
+              <div className="mt-6 flex flex-wrap items-center gap-8">
+
+                <div>
+
+                  <h3 className="text-3xl font-bold text-blue-500">
+                    {filteredTasks.length}
+                  </h3>
+
+                  <p className="text-sm text-slate-500">
+                    Active Tasks
+                  </p>
+
+                </div>
+
+                <div className="h-10 w-px bg-slate-700" />
+
+                <div>
+
+                  <h3 className="text-3xl font-bold text-green-500">
+                    {
+                      tasks.filter(
+                        (task) =>
+                          task.status === "Completed"
+                      ).length
+                    }
+                  </h3>
+
+                  <p className="text-sm text-slate-500">
+                    Completed
+                  </p>
+
+                </div>
+
+                <div className="h-10 w-px bg-slate-700" />
+
+                <div>
+
+                  <h3 className="text-3xl font-bold text-red-500">
+                    {
+                      tasks.filter(
+                        (task) =>
+                          task.priority === "High"
+                      ).length
+                    }
+                  </h3>
+
+                  <p className="text-sm text-slate-500">
+                    High Priority
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <button
+              onClick={handleAddTask}
+              className="
+                group
+
+                flex
+                items-center
+                gap-3
+
+                rounded-2xl
+
+                bg-gradient-to-r
+                from-blue-600
+                to-violet-600
+
+                px-8
+                py-4
+
+                font-semibold
+                text-white
+
+                shadow-xl
+
+                hover:scale-105
+                hover:shadow-blue-600/30
+
+                transition-all
+              "
+            >
+              <Plus
+                size={22}
+                className="transition group-hover:rotate-90"
+              />
+
+              Add New Task
+
+            </button>
 
           </div>
 
-          <button
-            onClick={handleAddTask}
-            className="
-              flex
-              items-center
-              justify-center
-              gap-2
-
-              rounded-2xl
-
-              bg-gradient-to-r
-              from-blue-600
-              to-violet-600
-
-              px-7
-              py-4
-
-              font-semibold
-              text-white
-
-              shadow-xl
-
-              transition-all
-              duration-300
-
-              hover:-translate-y-1
-              hover:shadow-2xl
-
-              active:scale-95
-            "
-          >
-            <Plus size={20} />
-            Add New Task
-          </button>
-
         </div>
 
-        {/* Search & Filters */}
+        {/* =============================== */}
+        {/* Search Toolbar */}
+        {/* =============================== */}
 
-        <div
-          className="
-            mb-10
+        <div className="mb-8">
 
-            rounded-3xl
+          <div className="rounded-3xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-6">
 
-            bg-white
-            dark:bg-slate-900
-
-            border
-            border-slate-200
-            dark:border-slate-700
-
-            shadow-lg
-
-            p-6
-
-            transition-all
-            duration-300
-          "
-        >
-          <div className="grid lg:grid-cols-3 gap-6">
-
-            <div className="lg:col-span-2">
+            <div className="flex flex-col xl:flex-row xl:items-center gap-5">
 
               <SearchBar
                 value={search}
                 onChange={setSearch}
               />
 
-            </div>
+              <div className="flex flex-wrap items-center gap-5">
 
-            <FilterBar
-              status={status}
-              setStatus={setStatus}
-              priority={priority}
-              setPriority={setPriority}
-            />
+                <div className="rounded-xl bg-slate-800 px-4 py-3 text-sm text-slate-300">
+
+                  Showing
+
+                  <span className="mx-2 font-bold text-white">
+                    {filteredTasks.length}
+                  </span>
+
+                  task
+                  {filteredTasks.length !== 1 && "s"}
+
+                </div>
+
+                <FilterBar
+                  status={status}
+                  setStatus={setStatus}
+                  priority={priority}
+                  setPriority={setPriority}
+                />
+
+              </div>
+
+            </div>
 
           </div>
 
         </div>
 
+        {/* =============================== */}
         {/* Tasks */}
+        {/* =============================== */}
 
         {filteredTasks.length === 0 ? (
 
-          <div className="mt-12">
-            <EmptyState />
-          </div>
+          <EmptyState />
 
         ) : (
 
@@ -261,7 +320,7 @@ function TaskList() {
 
       </motion.section>
 
-      {/* Add / Edit Modal */}
+      {/* Add/Edit */}
 
       <AddTaskModal
         isOpen={isModalOpen}
@@ -269,7 +328,7 @@ function TaskList() {
         task={selectedTask}
       />
 
-      {/* Delete Modal */}
+      {/* Delete */}
 
       <DeleteModal
         isOpen={isDeleteOpen}

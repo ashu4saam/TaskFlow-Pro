@@ -2,11 +2,13 @@ import {
   PieChart,
   Pie,
   Cell,
-  Tooltip,
   ResponsiveContainer,
+  Tooltip,
 } from "recharts";
 
+import { CheckCircle2 } from "lucide-react";
 import { motion } from "framer-motion";
+
 import { useTasks } from "../../context/TaskContext";
 
 function StatusPieChart() {
@@ -20,6 +22,13 @@ function StatusPieChart() {
     (task) => task.status === "Pending"
   ).length;
 
+  const total = completed + pending;
+
+  const completion =
+    total === 0
+      ? 0
+      : Math.round((completed / total) * 100);
+
   const data = [
     {
       name: "Completed",
@@ -31,113 +40,128 @@ function StatusPieChart() {
     },
   ];
 
-  const COLORS = ["#22c55e", "#f59e0b"];
+  const COLORS = [
+    "#22c55e",
+    "#f59e0b",
+  ];
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 25 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4 }}
+      whileHover={{
+        y: -5,
+      }}
       className="
         rounded-3xl
+
         border
-        border-slate-200
-        dark:border-slate-700
+        border-slate-700
 
-        bg-white
-        dark:bg-slate-900
+        bg-slate-900
 
-        p-6
+        p-8
 
         shadow-lg
       "
     >
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex justify-between items-center">
 
         <div>
 
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+          <h2 className="text-2xl font-bold text-white">
             Task Status
           </h2>
 
-          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            Overview of completed and pending tasks
+          <p className="mt-2 text-slate-400">
+            Overall completion overview
+          </p>
+
+        </div>
+
+        <CheckCircle2
+          size={34}
+          className="text-green-400"
+        />
+
+      </div>
+
+      <div className="relative mt-8 h-80">
+
+        <ResponsiveContainer>
+
+          <PieChart>
+
+            <Pie
+              data={data}
+              innerRadius={80}
+              outerRadius={110}
+              paddingAngle={4}
+              dataKey="value"
+            >
+              {data.map((item, index) => (
+                <Cell
+                  key={index}
+                  fill={COLORS[index]}
+                />
+              ))}
+            </Pie>
+
+            <Tooltip />
+
+          </PieChart>
+
+        </ResponsiveContainer>
+
+        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+
+          <h2 className="text-5xl font-black text-white">
+            {completion}%
+          </h2>
+
+          <p className="text-slate-400 mt-2">
+            Completed
           </p>
 
         </div>
 
       </div>
 
-      <div className="h-80">
+      <div className="mt-8 grid grid-cols-2 gap-5">
 
-        <ResponsiveContainer width="100%" height="100%">
+        <div className="rounded-2xl bg-slate-800 p-5">
 
-          <PieChart>
+          <div className="flex items-center gap-3">
 
-            <Pie
-              data={data}
-              dataKey="value"
-              innerRadius={70}
-              outerRadius={105}
-              paddingAngle={4}
-              stroke="none"
-            >
-              {data.map((entry, index) => (
-                <Cell
-                  key={entry.name}
-                  fill={COLORS[index]}
-                />
-              ))}
-            </Pie>
+            <div className="h-3 w-3 rounded-full bg-green-500" />
 
-            <Tooltip
-              contentStyle={{
-                borderRadius: "12px",
-                border: "none",
-                backgroundColor: "#1e293b",
-                color: "#fff",
-              }}
-            />
+            <span className="text-slate-300">
+              Completed
+            </span>
 
-          </PieChart>
+          </div>
 
-        </ResponsiveContainer>
-
-      </div>
-
-      <div className="mt-6 flex justify-center gap-10">
-
-        <div className="flex items-center gap-2">
-
-          <div className="h-3 w-3 rounded-full bg-green-500" />
-
-          <span className="text-sm text-slate-600 dark:text-slate-300">
-            Completed
-          </span>
+          <h3 className="mt-4 text-3xl font-bold text-white">
+            {completed}
+          </h3>
 
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="rounded-2xl bg-slate-800 p-5">
 
-          <div className="h-3 w-3 rounded-full bg-yellow-500" />
+          <div className="flex items-center gap-3">
 
-          <span className="text-sm text-slate-600 dark:text-slate-300">
-            Pending
-          </span>
+            <div className="h-3 w-3 rounded-full bg-yellow-500" />
+
+            <span className="text-slate-300">
+              Pending
+            </span>
+
+          </div>
+
+          <h3 className="mt-4 text-3xl font-bold text-white">
+            {pending}
+          </h3>
 
         </div>
-
-      </div>
-
-      <div className="mt-6 text-center">
-
-        <p className="text-3xl font-bold text-slate-900 dark:text-white">
-          {tasks.length}
-        </p>
-
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Total Tasks
-        </p>
 
       </div>
 
