@@ -10,11 +10,22 @@ import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   return (
-    <aside className="w-72 bg-slate-900 text-white min-h-screen p-8">
-
+    <aside
+      className="
+      w-72
+      min-h-screen
+      p-8
+      bg-slate-900
+      dark:bg-slate-950
+      border-r
+      border-slate-800
+      dark:border-slate-800
+      transition-colors duration-300
+    "
+    >
       {/* Logo */}
 
-      <div>
+      <div className="mb-10">
 
         <h2 className="text-3xl font-bold text-blue-400">
           TaskFlow
@@ -28,7 +39,7 @@ function Sidebar() {
 
       {/* Navigation */}
 
-      <nav className="space-y-3 mt-10">
+      <nav className="space-y-3">
 
         <SidebarItem
           to="/"
@@ -61,7 +72,6 @@ function Sidebar() {
         />
 
       </nav>
-
     </aside>
   );
 }
@@ -72,18 +82,27 @@ function SidebarItem({ icon, title, to }) {
       to={to}
       end={to === "/"}
       className={({ isActive }) =>
-        `flex items-center gap-4 p-4 rounded-xl transition-all duration-300 ${
+        `
+        flex
+        items-center
+        gap-4
+        p-4
+        rounded-xl
+        font-medium
+        transition-all
+        duration-300
+
+        ${
           isActive
             ? "bg-blue-600 text-white shadow-lg"
-            : "hover:bg-slate-800 text-slate-300"
-        }`
+            : "text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-800"
+        }
+      `
       }
     >
       {icon}
 
-      <span className="font-medium">
-        {title}
-      </span>
+      <span>{title}</span>
     </NavLink>
   );
 }
