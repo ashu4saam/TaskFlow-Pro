@@ -1,43 +1,66 @@
 import { Calendar, Pencil, Trash2 } from "lucide-react";
 import dayjs from "dayjs";
+import { motion } from "framer-motion";
 
 function TaskCard({ task, onEdit, onDelete }) {
   const getPriorityColor = (priority) => {
     switch (priority) {
       case "High":
-        return "bg-red-100 text-red-600";
+        return "bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400";
+
       case "Medium":
-        return "bg-yellow-100 text-yellow-700";
+        return "bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300";
+
       case "Low":
-        return "bg-green-100 text-green-700";
+        return "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400";
+
       default:
-        return "bg-gray-100 text-gray-700";
+        return "bg-gray-100 text-gray-700 dark:bg-slate-700 dark:text-slate-300";
     }
   };
 
   const getStatusColor = (status) => {
     switch (status) {
       case "Completed":
-        return "bg-green-100 text-green-600";
+        return "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400";
+
       default:
-        return "bg-orange-100 text-orange-600";
+        return "bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-300";
     }
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-6 border border-gray-100">
-
+    <motion.div
+      whileHover={{
+        y: -6,
+        scale: 1.01,
+      }}
+      transition={{ duration: 0.25 }}
+      className="
+        bg-white
+        dark:bg-slate-900
+        rounded-3xl
+        shadow-lg
+        hover:shadow-2xl
+        border
+        border-slate-200
+        dark:border-slate-700
+        p-6
+        transition-all
+        duration-300
+      "
+    >
       {/* Header */}
 
       <div className="flex justify-between items-start gap-4">
 
         <div className="flex-1">
 
-          <h2 className="text-xl font-bold text-slate-800">
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white">
             {task.title}
           </h2>
 
-          <p className="text-gray-500 mt-2 leading-relaxed">
+          <p className="mt-3 leading-relaxed text-slate-500 dark:text-slate-400">
             {task.description}
           </p>
 
@@ -69,9 +92,9 @@ function TaskCard({ task, onEdit, onDelete }) {
 
       {/* Footer */}
 
-      <div className="mt-6 flex justify-between items-center">
+      <div className="mt-6 flex items-center justify-between">
 
-        <div className="flex items-center gap-2 text-gray-500">
+        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400">
 
           <Calendar size={18} />
 
@@ -81,33 +104,44 @@ function TaskCard({ task, onEdit, onDelete }) {
 
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex gap-3">
 
           <button
             onClick={() => onEdit(task)}
-            className="p-2 rounded-lg hover:bg-blue-50 transition"
+            className="
+              p-2
+              rounded-xl
+              hover:bg-blue-100
+              dark:hover:bg-blue-900/30
+              transition
+            "
           >
             <Pencil
               size={18}
-              className="text-blue-600 hover:text-blue-800"
+              className="text-blue-600 dark:text-blue-400"
             />
           </button>
 
           <button
             onClick={() => onDelete(task)}
-            className="p-2 rounded-lg hover:bg-red-50 transition"
+            className="
+              p-2
+              rounded-xl
+              hover:bg-red-100
+              dark:hover:bg-red-900/30
+              transition
+            "
           >
             <Trash2
               size={18}
-              className="text-red-600 hover:text-red-800"
+              className="text-red-600 dark:text-red-400"
             />
           </button>
 
         </div>
 
       </div>
-
-    </div>
+    </motion.div>
   );
 }
 
