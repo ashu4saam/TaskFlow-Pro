@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Tasks from "./pages/Tasks";
 import Analytics from "./pages/Analytics";
 import Calendar from "./pages/Calendar";
+import Settings from "./pages/Settings";
 
 function App() {
   return (
@@ -28,6 +29,11 @@ function App() {
         <Route
           path="/calendar"
           element={<Calendar />}
+        />
+
+        <Route
+          path="/settings"
+          element={<Settings />}
         />
 
       </Routes>
