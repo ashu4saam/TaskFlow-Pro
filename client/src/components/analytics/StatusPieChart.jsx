@@ -1,4 +1,12 @@
-import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
+
+import { motion } from "framer-motion";
 import { useTasks } from "../../context/TaskContext";
 
 function StatusPieChart() {
@@ -26,13 +34,41 @@ function StatusPieChart() {
   const COLORS = ["#22c55e", "#f59e0b"];
 
   return (
-    <div className="bg-white rounded-3xl shadow-md border border-slate-200 p-6">
+    <motion.div
+      initial={{ opacity: 0, y: 25 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+      className="
+        rounded-3xl
+        border
+        border-slate-200
+        dark:border-slate-700
 
-      <h2 className="text-xl font-bold text-slate-800 mb-6">
-        Task Status
-      </h2>
+        bg-white
+        dark:bg-slate-900
 
-      <div className="h-72">
+        p-6
+
+        shadow-lg
+      "
+    >
+      <div className="flex items-center justify-between mb-6">
+
+        <div>
+
+          <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+            Task Status
+          </h2>
+
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            Overview of completed and pending tasks
+          </p>
+
+        </div>
+
+      </div>
+
+      <div className="h-80">
 
         <ResponsiveContainer width="100%" height="100%">
 
@@ -41,21 +77,27 @@ function StatusPieChart() {
             <Pie
               data={data}
               dataKey="value"
-              innerRadius={60}
-              outerRadius={95}
-              paddingAngle={5}
+              innerRadius={70}
+              outerRadius={105}
+              paddingAngle={4}
+              stroke="none"
             >
-
               {data.map((entry, index) => (
                 <Cell
-                  key={index}
+                  key={entry.name}
                   fill={COLORS[index]}
                 />
               ))}
-
             </Pie>
 
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                borderRadius: "12px",
+                border: "none",
+                backgroundColor: "#1e293b",
+                color: "#fff",
+              }}
+            />
 
           </PieChart>
 
@@ -63,13 +105,13 @@ function StatusPieChart() {
 
       </div>
 
-      <div className="flex justify-center gap-8 mt-4">
+      <div className="mt-6 flex justify-center gap-10">
 
         <div className="flex items-center gap-2">
 
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
+          <div className="h-3 w-3 rounded-full bg-green-500" />
 
-          <span className="text-sm">
+          <span className="text-sm text-slate-600 dark:text-slate-300">
             Completed
           </span>
 
@@ -77,9 +119,9 @@ function StatusPieChart() {
 
         <div className="flex items-center gap-2">
 
-          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+          <div className="h-3 w-3 rounded-full bg-yellow-500" />
 
-          <span className="text-sm">
+          <span className="text-sm text-slate-600 dark:text-slate-300">
             Pending
           </span>
 
@@ -87,7 +129,19 @@ function StatusPieChart() {
 
       </div>
 
-    </div>
+      <div className="mt-6 text-center">
+
+        <p className="text-3xl font-bold text-slate-900 dark:text-white">
+          {tasks.length}
+        </p>
+
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Total Tasks
+        </p>
+
+      </div>
+
+    </motion.div>
   );
 }
 
