@@ -25,9 +25,11 @@ function TaskCard({ task, onEdit, onDelete }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6">
+    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 p-6 border border-gray-100">
 
-      <div className="flex justify-between items-start">
+      {/* Header */}
+
+      <div className="flex justify-between items-start gap-4">
 
         <div className="flex-1">
 
@@ -35,14 +37,14 @@ function TaskCard({ task, onEdit, onDelete }) {
             {task.title}
           </h2>
 
-          <p className="text-gray-500 mt-2">
+          <p className="text-gray-500 mt-2 leading-relaxed">
             {task.description}
           </p>
 
         </div>
 
         <span
-          className={`px-3 py-1 rounded-full text-sm font-medium ${getPriorityColor(
+          className={`px-3 py-1 rounded-full text-sm font-semibold ${getPriorityColor(
             task.priority
           )}`}
         >
@@ -51,7 +53,9 @@ function TaskCard({ task, onEdit, onDelete }) {
 
       </div>
 
-      <div className="mt-5 flex items-center gap-3">
+      {/* Status */}
+
+      <div className="mt-5">
 
         <span
           className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(
@@ -63,13 +67,15 @@ function TaskCard({ task, onEdit, onDelete }) {
 
       </div>
 
+      {/* Footer */}
+
       <div className="mt-6 flex justify-between items-center">
 
         <div className="flex items-center gap-2 text-gray-500">
 
           <Calendar size={18} />
 
-          <span>
+          <span className="text-sm">
             {dayjs(task.dueDate).format("DD MMM YYYY")}
           </span>
 
@@ -77,17 +83,23 @@ function TaskCard({ task, onEdit, onDelete }) {
 
         <div className="flex gap-4">
 
-          <button onClick={() => onEdit(task)}>
+          <button
+            onClick={() => onEdit(task)}
+            className="p-2 rounded-lg hover:bg-blue-50 transition"
+          >
             <Pencil
               size={18}
-              className="text-blue-600 hover:text-blue-800 transition"
+              className="text-blue-600 hover:text-blue-800"
             />
           </button>
 
-          <button onClick={() => onDelete(task._id)}>
+          <button
+            onClick={() => onDelete(task)}
+            className="p-2 rounded-lg hover:bg-red-50 transition"
+          >
             <Trash2
               size={18}
-              className="text-red-600 hover:text-red-800 transition"
+              className="text-red-600 hover:text-red-800"
             />
           </button>
 
