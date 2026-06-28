@@ -3,7 +3,7 @@ const connectDB = require("./config/db");
 const app = require("./app");
 
 dotenv.config();
-console.log(process.env.MONGODB_URI);
+
 
 connectDB();
 
