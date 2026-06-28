@@ -19,7 +19,6 @@ function Sidebar() {
       dark:bg-slate-950
       border-r
       border-slate-800
-      dark:border-slate-800
       transition-colors duration-300
     "
     >
@@ -43,12 +42,13 @@ function Sidebar() {
 
         <SidebarItem
           to="/"
+          end
           icon={<LayoutDashboard size={20} />}
           title="Dashboard"
         />
 
         <SidebarItem
-          to="/"
+          to="/tasks"
           icon={<CheckSquare size={20} />}
           title="Tasks"
         />
@@ -72,15 +72,16 @@ function Sidebar() {
         />
 
       </nav>
+
     </aside>
   );
 }
 
-function SidebarItem({ icon, title, to }) {
+function SidebarItem({ icon, title, to, end }) {
   return (
     <NavLink
       to={to}
-      end={to === "/"}
+      end={end}
       className={({ isActive }) =>
         `
         flex
@@ -95,13 +96,12 @@ function SidebarItem({ icon, title, to }) {
         ${
           isActive
             ? "bg-blue-600 text-white shadow-lg"
-            : "text-slate-300 hover:bg-slate-800 dark:hover:bg-slate-800"
+            : "text-slate-300 hover:bg-slate-800"
         }
-      `
+        `
       }
     >
       {icon}
-
       <span>{title}</span>
     </NavLink>
   );
