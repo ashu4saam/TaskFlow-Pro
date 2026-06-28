@@ -123,7 +123,20 @@ function TaskList() {
 
         <div className="mb-8">
 
-          <div className="inline-flex items-center gap-3 rounded-full border border-blue-500/20 bg-blue-500/10 px-5 py-2">
+          <div
+  className="
+    inline-flex
+    items-center
+    gap-3
+    rounded-full
+    border
+    border-blue-500/20
+    bg-blue-500/10
+    backdrop-blur-md
+    px-5
+    py-2
+  "
+>
 
             <span className="text-lg">📋</span>
 
@@ -137,7 +150,7 @@ function TaskList() {
 
             <div>
 
-              <h1 className="text-5xl font-black text-white tracking-tight">
+              <h1 className="text-5xl font-black tracking-tight text-slate-900 dark:text-white">
                 Today's Tasks
               </h1>
 
@@ -156,13 +169,13 @@ function TaskList() {
                     {filteredTasks.length}
                   </h3>
 
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
                     Active Tasks
                   </p>
 
                 </div>
 
-                <div className="h-10 w-px bg-slate-700" />
+               <div className="h-10 w-px bg-slate-300 dark:bg-slate-700" />
 
                 <div>
 
@@ -175,13 +188,13 @@ function TaskList() {
                     }
                   </h3>
 
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
                     Completed
                   </p>
 
                 </div>
 
-                <div className="h-10 w-px bg-slate-700" />
+                <div className="h-10 w-px bg-slate-300 dark:bg-slate-700" />
 
                 <div>
 
@@ -194,7 +207,7 @@ function TaskList() {
                     }
                   </h3>
 
-                  <p className="text-sm text-slate-500">
+                  <p className="text-sm text-slate-500 dark:text-slate-400">
                     High Priority
                   </p>
 
@@ -205,42 +218,43 @@ function TaskList() {
             </div>
 
             <button
-              onClick={handleAddTask}
-              className="
-                group
+  onClick={handleAddTask}
+  className="
+    group
+    flex
+    items-center
+    gap-3
 
-                flex
-                items-center
-                gap-3
+    rounded-2xl
 
-                rounded-2xl
+    bg-gradient-to-r
+    from-blue-600
+    to-violet-600
 
-                bg-gradient-to-r
-                from-blue-600
-                to-violet-600
+    px-8
+    py-4
 
-                px-8
-                py-4
+    font-semibold
+    text-white
 
-                font-semibold
-                text-white
+    shadow-xl
+    dark:shadow-[0_15px_35px_rgba(59,130,246,.25)]
 
-                shadow-xl
+    transition-all
+    duration-300
 
-                hover:scale-105
-                hover:shadow-blue-600/30
+    hover:-translate-y-1
+    hover:scale-[1.02]
+    hover:shadow-blue-500/30
+  "
+>
+  <Plus
+    size={22}
+    className="transition duration-300 group-hover:rotate-90"
+  />
 
-                transition-all
-              "
-            >
-              <Plus
-                size={22}
-                className="transition group-hover:rotate-90"
-              />
-
-              Add New Task
-
-            </button>
+  Add New Task
+</button>
 
           </div>
 
@@ -252,7 +266,24 @@ function TaskList() {
 
         <div className="mb-8">
 
-          <div className="rounded-3xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl p-6">
+          <div
+  className="
+    rounded-3xl
+    border
+    border-slate-200
+    dark:border-slate-700/60
+
+    bg-white
+    dark:bg-slate-800
+
+    backdrop-blur-xl
+
+    shadow-lg
+    dark:shadow-[0_15px_35px_rgba(15,23,42,.35)]
+
+    p-6
+  "
+>
 
             <div className="flex flex-col xl:flex-row xl:items-center gap-5">
 
@@ -263,11 +294,27 @@ function TaskList() {
 
               <div className="flex flex-wrap items-center gap-5">
 
-                <div className="rounded-xl bg-slate-800 px-4 py-3 text-sm text-slate-300">
+                <div
+  className="
+    rounded-xl
+    bg-slate-100
+    dark:bg-slate-700
+
+    px-4
+    py-3
+
+    text-sm
+    font-medium
+
+    text-slate-600
+    dark:text-slate-300
+  "
+>
+
 
                   Showing
 
-                  <span className="mx-2 font-bold text-white">
+                  <span className="mx-2 font-bold text-slate-900 dark:text-white">
                     {filteredTasks.length}
                   </span>
 

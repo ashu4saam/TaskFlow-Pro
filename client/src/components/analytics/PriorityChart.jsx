@@ -37,14 +37,28 @@ function PriorityChart() {
 
   return (
     <motion.div
-      whileHover={{ y: -5 }}
+      whileHover={{
+        y: -5,
+        scale: 1.01,
+      }}
+      transition={{ duration: 0.25 }}
       className="
         rounded-3xl
+
         border
-        border-slate-700
-        bg-slate-900
+        border-slate-200
+        dark:border-slate-700/60
+
+        bg-white
+        dark:bg-slate-800
+
         p-8
+
         shadow-lg
+        dark:shadow-[0_15px_35px_rgba(15,23,42,.35)]
+
+        transition-all
+        duration-300
       "
     >
       {/* Header */}
@@ -53,20 +67,22 @@ function PriorityChart() {
 
         <div>
 
-          <h2 className="text-2xl font-bold text-white">
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
             Priority Distribution
           </h2>
 
-          <p className="mt-2 text-slate-400">
+          <p className="mt-2 text-slate-600 dark:text-slate-400">
             Overview of task priorities
           </p>
 
         </div>
 
-        <Flag
-          size={32}
-          className="text-blue-400"
-        />
+        <div className="rounded-2xl bg-blue-100 p-4 dark:bg-blue-900/30">
+          <Flag
+            size={28}
+            className="text-blue-600 dark:text-blue-400"
+          />
+        </div>
 
       </div>
 
@@ -79,37 +95,41 @@ function PriorityChart() {
           <BarChart data={data}>
 
             <CartesianGrid
-              stroke="#334155"
               strokeDasharray="4 4"
+              stroke="#475569"
+              opacity={0.25}
             />
 
             <XAxis
               dataKey="priority"
-              stroke="#94a3b8"
               tickLine={false}
               axisLine={false}
+              stroke="#94a3b8"
             />
 
             <YAxis
-              stroke="#94a3b8"
               allowDecimals={false}
               tickLine={false}
               axisLine={false}
+              stroke="#94a3b8"
             />
 
             <Tooltip
-              cursor={{ fill: "rgba(59,130,246,.08)" }}
+              cursor={{
+                fill: "rgba(59,130,246,.08)",
+              }}
               contentStyle={{
-                background: "#0f172a",
+                background: "#1e293b",
                 border: "1px solid #334155",
                 borderRadius: "14px",
                 color: "#fff",
+                boxShadow: "0 10px 25px rgba(0,0,0,.25)",
               }}
             />
 
             <Bar
               dataKey="tasks"
-              radius={[12, 12, 0, 0]}
+              radius={[14, 14, 0, 0]}
             >
               {data.map((entry, index) => (
                 <Cell
@@ -131,32 +151,45 @@ function PriorityChart() {
 
         {data.map((item) => (
 
-          <div
+          <motion.div
             key={item.priority}
+            whileHover={{
+              y: -3,
+            }}
             className="
               rounded-2xl
-              bg-slate-800
-              p-4
+
+              border
+              border-slate-200
+              dark:border-slate-700
+
+              bg-slate-50
+              dark:bg-slate-700/50
+
+              p-5
+
               text-center
+
+              transition-all
             "
           >
 
             <div
-              className="mx-auto mb-2 h-3 w-3 rounded-full"
+              className="mx-auto mb-3 h-3.5 w-3.5 rounded-full"
               style={{
                 background: item.color,
               }}
             />
 
-            <h3 className="text-2xl font-bold text-white">
+            <h3 className="text-3xl font-bold text-slate-900 dark:text-white">
               {item.tasks}
             </h3>
 
-            <p className="text-sm text-slate-400">
+            <p className="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
               {item.priority}
             </p>
 
-          </div>
+          </motion.div>
 
         ))}
 

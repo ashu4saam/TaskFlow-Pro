@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
-/* Enable class-based dark mode */
+/* Tailwind CSS v4 - Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* =========================
+   Global
+========================= */
 
 html,
 body,
@@ -8,6 +13,7 @@ body,
   width: 100%;
   min-height: 100%;
   margin: 0;
+  padding: 0;
   scroll-behavior: smooth;
 }
 
@@ -16,17 +22,36 @@ body {
     Inter,
     "Segoe UI",
     Roboto,
+    Arial,
     sans-serif;
 
-  background: #f8fafc;
+  background-color: #f8fafc;
   color: #0f172a;
 
   transition:
-    background-color .35s ease,
-    color .35s ease;
+    background-color 0.35s ease,
+    color 0.35s ease;
 }
 
-/* Scrollbar */
+/* Dark Background */
+
+.dark body {
+  background-color: #020617;
+  color: #f8fafc;
+}
+
+/* =========================
+   Selection
+========================= */
+
+::selection {
+  background: #2563eb;
+  color: white;
+}
+
+/* =========================
+   Scrollbar
+========================= */
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -45,13 +70,6 @@ body {
   background: #64748b;
 }
 
-/* Dark Theme */
-
-.dark body {
-  background: #020617;
-  color: #f8fafc;
-}
-
 .dark ::-webkit-scrollbar-track {
   background: #0f172a;
 }
@@ -64,9 +82,44 @@ body {
   background: #64748b;
 }
 
+/* =========================
+   Forms
+========================= */
+
 button,
 input,
-select,
-textarea {
-  transition: all .25s ease;
+textarea,
+select {
+  font: inherit;
+  transition: all 0.25s ease;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* =========================
+   Images
+========================= */
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* =========================
+   Links
+========================= */
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================
+   Calendar
+========================= */
+
+.react-calendar {
+  color: inherit;
 }

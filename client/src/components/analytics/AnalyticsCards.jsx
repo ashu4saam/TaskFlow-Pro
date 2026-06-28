@@ -74,10 +74,11 @@ function AnalyticsCards() {
             y: 0,
           }}
           transition={{
-            delay: index * 0.1,
+            delay: index * 0.08,
           }}
           whileHover={{
             y: -6,
+            scale: 1.02,
           }}
           className="
             group
@@ -85,27 +86,31 @@ function AnalyticsCards() {
             rounded-3xl
 
             border
-            border-slate-700
+            border-slate-200
+            dark:border-slate-700/60
 
-            bg-slate-900
+            bg-white
+            dark:bg-slate-800
 
             p-6
 
             shadow-lg
+            dark:shadow-[0_15px_35px_rgba(15,23,42,.35)]
 
-            transition
+            transition-all
+            duration-300
           "
         >
 
-          <div className="flex justify-between">
+          <div className="flex items-start justify-between">
 
             <div>
 
-              <p className="text-slate-400 text-sm">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 {card.title}
               </p>
 
-              <h2 className="mt-3 text-5xl font-black text-white">
+              <h2 className="mt-3 text-5xl font-black text-slate-900 dark:text-white">
                 {card.value}
               </h2>
 
@@ -118,6 +123,7 @@ function AnalyticsCards() {
                 w-16
                 items-center
                 justify-center
+
                 rounded-2xl
 
                 bg-gradient-to-br
@@ -125,6 +131,8 @@ function AnalyticsCards() {
                 ${card.color}
 
                 text-white
+
+                shadow-lg
               `}
             >
               {card.icon}
@@ -136,10 +144,10 @@ function AnalyticsCards() {
 
             <TrendingUp
               size={18}
-              className="text-green-400"
+              className="text-green-500 dark:text-green-400"
             />
 
-            <span className="text-sm text-green-400">
+            <span className="text-sm font-medium text-green-500 dark:text-green-400">
               Live Statistics
             </span>
 
@@ -153,7 +161,7 @@ function AnalyticsCards() {
 
       <motion.div
         whileHover={{
-          y: -6,
+          y: -4,
         }}
         className="
           md:col-span-2
@@ -162,35 +170,43 @@ function AnalyticsCards() {
           rounded-3xl
 
           border
-          border-slate-700
+          border-slate-200
+          dark:border-slate-700/60
 
-          bg-slate-900
+          bg-white
+          dark:bg-slate-800
 
           p-8
+
+          shadow-lg
+          dark:shadow-[0_15px_35px_rgba(15,23,42,.35)]
+
+          transition-all
+          duration-300
         "
       >
 
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between">
 
           <div>
 
-            <h2 className="text-2xl font-bold text-white">
+            <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
               Productivity Score
             </h2>
 
-            <p className="mt-2 text-slate-400">
+            <p className="mt-2 text-slate-600 dark:text-slate-400">
               Completion rate based on your current tasks.
             </p>
 
           </div>
 
-          <div className="text-5xl font-black text-blue-500">
+          <div className="text-5xl font-black text-blue-600 dark:text-blue-500">
             {productivity}%
           </div>
 
         </div>
 
-        <div className="mt-6 h-4 rounded-full bg-slate-800 overflow-hidden">
+        <div className="mt-8 h-4 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
 
           <motion.div
             initial={{
