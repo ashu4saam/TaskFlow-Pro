@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: `${import.meta.env.VITE_API_URL}/api/tasks`,
+  baseURL: "https://taskflow-backend-01ly.onrender.com/api/tasks",
 });
 
 export const getTasks = async () => {

@@ -21,7 +21,6 @@ function TaskForm({ task, onClose }) {
     },
   });
 
-  // Fill form when editing
   useEffect(() => {
     if (task) {
       reset({
@@ -45,14 +44,39 @@ function TaskForm({ task, onClose }) {
       }
 
       reset();
-
       onClose();
-
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong");
     }
   };
+
+  const inputClass = `
+    w-full
+    rounded-xl
+    border
+    border-slate-300
+    dark:border-slate-700
+
+    bg-white
+    dark:bg-slate-800
+
+    px-4
+    py-3
+
+    text-slate-900
+    dark:text-white
+
+    placeholder:text-slate-400
+    dark:placeholder:text-slate-500
+
+    outline-none
+    transition-all
+
+    focus:border-blue-500
+    focus:ring-4
+    focus:ring-blue-500/10
+  `;
 
   return (
     <form
@@ -62,7 +86,7 @@ function TaskForm({ task, onClose }) {
       {/* Title */}
 
       <div>
-        <label className="block mb-2 font-semibold">
+        <label className="mb-2 block font-semibold text-slate-800 dark:text-slate-200">
           Task Title
         </label>
 
@@ -72,11 +96,11 @@ function TaskForm({ task, onClose }) {
           {...register("title", {
             required: "Task title is required",
           })}
-          className="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none"
+          className={inputClass}
         />
 
         {errors.title && (
-          <p className="text-red-500 text-sm mt-1">
+          <p className="mt-1 text-sm text-red-500">
             {errors.title.message}
           </p>
         )}
@@ -85,7 +109,7 @@ function TaskForm({ task, onClose }) {
       {/* Description */}
 
       <div>
-        <label className="block mb-2 font-semibold">
+        <label className="mb-2 block font-semibold text-slate-800 dark:text-slate-200">
           Description
         </label>
 
@@ -93,22 +117,21 @@ function TaskForm({ task, onClose }) {
           rows="4"
           placeholder="Task description..."
           {...register("description")}
-          className="w-full border rounded-xl px-4 py-3 resize-none focus:ring-2 focus:ring-blue-500 outline-none"
+          className={`${inputClass} resize-none`}
         />
       </div>
 
-      {/* Priority */}
+      {/* Priority & Status */}
 
       <div className="grid grid-cols-2 gap-5">
-
         <div>
-          <label className="block mb-2 font-semibold">
+          <label className="mb-2 block font-semibold text-slate-800 dark:text-slate-200">
             Priority
           </label>
 
           <select
             {...register("priority")}
-            className="w-full border rounded-xl px-4 py-3"
+            className={inputClass}
           >
             <option>High</option>
             <option>Medium</option>
@@ -117,25 +140,24 @@ function TaskForm({ task, onClose }) {
         </div>
 
         <div>
-          <label className="block mb-2 font-semibold">
+          <label className="mb-2 block font-semibold text-slate-800 dark:text-slate-200">
             Status
           </label>
 
           <select
             {...register("status")}
-            className="w-full border rounded-xl px-4 py-3"
+            className={inputClass}
           >
             <option>Pending</option>
             <option>Completed</option>
           </select>
         </div>
-
       </div>
 
       {/* Due Date */}
 
       <div>
-        <label className="block mb-2 font-semibold">
+        <label className="mb-2 block font-semibold text-slate-800 dark:text-slate-200">
           Due Date
         </label>
 
@@ -144,11 +166,11 @@ function TaskForm({ task, onClose }) {
           {...register("dueDate", {
             required: "Please select a due date",
           })}
-          className="w-full border rounded-xl px-4 py-3"
+          className={inputClass}
         />
 
         {errors.dueDate && (
-          <p className="text-red-500 text-sm mt-1">
+          <p className="mt-1 text-sm text-red-500">
             {errors.dueDate.message}
           </p>
         )}
@@ -157,11 +179,24 @@ function TaskForm({ task, onClose }) {
       {/* Buttons */}
 
       <div className="flex justify-end gap-4 pt-3">
-
         <button
           type="button"
           onClick={onClose}
-          className="px-6 py-3 rounded-xl bg-gray-200 hover:bg-gray-300 transition"
+          className="
+            rounded-xl
+            bg-slate-200
+            px-6
+            py-3
+            font-medium
+            text-slate-700
+            transition
+
+            hover:bg-slate-300
+
+            dark:bg-slate-700
+            dark:text-white
+            dark:hover:bg-slate-600
+          "
         >
           Cancel
         </button>
@@ -169,7 +204,20 @@ function TaskForm({ task, onClose }) {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold transition disabled:opacity-60"
+          className="
+            rounded-xl
+            bg-blue-600
+            px-6
+            py-3
+            font-semibold
+            text-white
+            transition
+
+            hover:bg-blue-700
+
+            disabled:cursor-not-allowed
+            disabled:opacity-60
+          "
         >
           {isSubmitting
             ? "Saving..."
@@ -177,9 +225,7 @@ function TaskForm({ task, onClose }) {
             ? "Save Changes"
             : "Create Task"}
         </button>
-
       </div>
-
     </form>
   );
 }
