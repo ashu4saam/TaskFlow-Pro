@@ -7,15 +7,46 @@ export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // ==========================
+  // Fetch All Tasks
+  // ==========================
+
   const fetchTasks = async () => {
     try {
       const data = await taskService.getTasks();
       setTasks(data);
     } catch (error) {
-      console.error("Failed to fetch tasks", error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // ==========================
+  // Create Task
+  // ==========================
+
+  const addTask = async (taskData) => {
+    await taskService.createTask(taskData);
+    fetchTasks();
+  };
+
+  // ==========================
+  // Update Task
+  // ==========================
+
+  const editTask = async (id, taskData) => {
+    await taskService.updateTask(id, taskData);
+    fetchTasks();
+  };
+
+  // ==========================
+  // Delete Task
+  // ==========================
+
+  const removeTask = async (id) => {
+    await taskService.deleteTask(id);
+    fetchTasks();
   };
 
   useEffect(() => {
@@ -26,9 +57,15 @@ export const TaskProvider = ({ children }) => {
     <TaskContext.Provider
       value={{
         tasks,
-        setTasks,
         loading,
+
         fetchTasks,
+
+        addTask,
+
+        editTask,
+
+        removeTask,
       }}
     >
       {children}
