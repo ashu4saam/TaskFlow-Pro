@@ -7,63 +7,36 @@ import EmptyState from "./EmptyState";
 import AddTaskModal from "./AddTaskModal";
 
 function TaskList() {
-  const { tasks, loading } = useTasks();
+  const { tasks, loading, removeTask } = useTasks();
 
-  // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Selected task for editing
   const [selectedTask, setSelectedTask] = useState(null);
 
-  // Open Add Modal
   const handleAddTask = () => {
     setSelectedTask(null);
     setIsModalOpen(true);
   };
 
-  // Open Edit Modal
   const handleEdit = (task) => {
     setSelectedTask(task);
     setIsModalOpen(true);
   };
 
-  // Delete Task (Temporary)
-  const handleDelete = (id) => {
-    console.log("Delete Task:", id);
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Delete this task permanently?"
+    );
 
-    // Backend integration will be added next
+    if (!confirmDelete) return;
+
+    await removeTask(id);
   };
 
   if (loading) {
     return (
       <div className="mt-10 text-center">
-        <p className="text-gray-500 text-lg animate-pulse">
-          Loading tasks...
-        </p>
+        Loading Tasks...
       </div>
-    );
-  }
-
-  if (tasks.length === 0) {
-    return (
-      <>
-        <div className="flex justify-end mb-6">
-          <button
-            onClick={handleAddTask}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg transition"
-          >
-            + Add New Task
-          </button>
-        </div>
-
-        <EmptyState />
-
-        <AddTaskModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          task={selectedTask}
-        />
-      </>
     );
   }
 
@@ -71,50 +44,48 @@ function TaskList() {
     <>
       <div className="mt-10">
 
-        {/* Header */}
-
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8">
 
           <div>
 
-            <h2 className="text-3xl font-bold text-slate-800">
+            <h2 className="text-3xl font-bold">
               Today's Tasks
             </h2>
 
-            <p className="text-gray-500 mt-2">
-              You have {tasks.length} active task
-              {tasks.length > 1 ? "s" : ""}.
+            <p className="text-gray-500 mt-1">
+              {tasks.length} Active Task
+              {tasks.length !== 1 && "s"}
             </p>
 
           </div>
 
           <button
             onClick={handleAddTask}
-            className="mt-4 md:mt-0 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition duration-300 shadow-lg hover:shadow-xl"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg"
           >
             + Add New Task
           </button>
 
         </div>
 
-        {/* Task Grid */}
+        {tasks.length === 0 ? (
+          <EmptyState />
+        ) : (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {tasks.map((task) => (
+              <TaskCard
+                key={task._id}
+                task={task}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
 
-          {tasks.map((task) => (
-            <TaskCard
-              key={task._id}
-              task={task}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-
-        </div>
+          </div>
+        )}
 
       </div>
-
-      {/* Add / Edit Modal */}
 
       <AddTaskModal
         isOpen={isModalOpen}
