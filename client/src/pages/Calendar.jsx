@@ -14,7 +14,7 @@ function CalendarPage() {
 
   const { tasks } = useTasks();
 
-  // Sort tasks by due date
+  // Upcoming Tasks
   const upcomingTasks = useMemo(() => {
     return [...tasks]
       .filter((task) => task.dueDate)
@@ -24,6 +24,7 @@ function CalendarPage() {
       );
   }, [tasks]);
 
+  // Priority Badge
   const getPriorityColor = (priority) => {
     switch (priority) {
       case "High":
@@ -38,6 +39,32 @@ function CalendarPage() {
       default:
         return "bg-gray-100 text-gray-700";
     }
+  };
+
+  // Calendar Dots
+  const tileContent = ({ date, view }) => {
+    if (view !== "month") return null;
+
+    const task = tasks.find(
+      (task) =>
+        dayjs(task.dueDate).format("YYYY-MM-DD") ===
+        dayjs(date).format("YYYY-MM-DD")
+    );
+
+    if (!task) return null;
+
+    const color =
+      task.priority === "High"
+        ? "bg-red-500"
+        : task.priority === "Medium"
+        ? "bg-yellow-500"
+        : "bg-green-500";
+
+    return (
+      <div className="flex justify-center mt-1">
+        <div className={`w-2 h-2 rounded-full ${color}`} />
+      </div>
+    );
   };
 
   return (
@@ -62,7 +89,7 @@ function CalendarPage() {
 
         </div>
 
-        {/* Main Grid */}
+        {/* Calendar + Upcoming Tasks */}
 
         <div className="grid lg:grid-cols-3 gap-8">
 
@@ -73,6 +100,7 @@ function CalendarPage() {
             <Calendar
               onChange={setDate}
               value={date}
+              tileContent={tileContent}
             />
 
           </div>
@@ -83,7 +111,10 @@ function CalendarPage() {
 
             <div className="flex items-center gap-3 mb-6">
 
-              <CalendarDays className="text-blue-600" />
+              <CalendarDays
+                className="text-blue-600"
+                size={22}
+              />
 
               <h2 className="text-xl font-bold">
                 Upcoming Tasks
@@ -105,12 +136,12 @@ function CalendarPage() {
 
                   <div
                     key={task._id}
-                    className="border rounded-2xl p-4 hover:shadow-md transition"
+                    className="border border-slate-200 rounded-2xl p-4 hover:shadow-lg transition"
                   >
 
                     <div className="flex justify-between items-start">
 
-                      <h3 className="font-semibold">
+                      <h3 className="font-semibold text-slate-800">
                         {task.title}
                       </h3>
 
@@ -124,13 +155,29 @@ function CalendarPage() {
 
                     </div>
 
-                    <p className="text-gray-500 text-sm mt-2 line-clamp-2">
+                    <p className="text-gray-500 text-sm mt-2">
                       {task.description}
                     </p>
 
-                    <p className="text-sm text-blue-600 mt-3 font-medium">
-                      {dayjs(task.dueDate).format("DD MMM YYYY")}
-                    </p>
+                    <div className="mt-3 flex justify-between items-center">
+
+                      <span className="text-blue-600 text-sm font-medium">
+                        {dayjs(task.dueDate).format(
+                          "DD MMM YYYY"
+                        )}
+                      </span>
+
+                      <span
+                        className={`text-xs px-2 py-1 rounded-full ${
+                          task.status === "Completed"
+                            ? "bg-green-100 text-green-600"
+                            : "bg-orange-100 text-orange-600"
+                        }`}
+                      >
+                        {task.status}
+                      </span>
+
+                    </div>
 
                   </div>
 
