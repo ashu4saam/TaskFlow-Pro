@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
 html,
 body,
 #root {
@@ -9,7 +12,16 @@ body,
 }
 
 body {
+  font-family: Arial, sans-serif;
   background: #f8fafc;
   color: #0f172a;
-  font-family: Arial, sans-serif;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Dark theme */
+.dark body {
+  background: #0f172a;
+  color: #f8fafc;
 }
